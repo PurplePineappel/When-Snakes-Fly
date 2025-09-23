@@ -1,0 +1,111 @@
+[gd_scene load_steps=8 format=3 uid="uid://cavwfrkhvf34g"]
+
+[ext_resource type="Texture2D" uid="uid://cixcnrlsxfh3y" path="res://PersonLeg.png" id="1_ypg2y"]
+[ext_resource type="Texture2D" uid="uid://ca05l0xoasxhw" path="res://PersonArm.png" id="2_yorm1"]
+[ext_resource type="Texture2D" uid="uid://w5qolrpbn0h3" path="res://PersonTorso.png" id="3_mpt12"]
+[ext_resource type="Texture2D" uid="uid://dw617aoc4pd5l" path="res://PersonHeadDead.png" id="4_fivkw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bwima"]
+size = Vector2(16, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2uhf"]
+size = Vector2(41, 56)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uejrg"]
+radius = 21.0
+height = 78.0
+
+[node name="Dummy" type="Node2D"]
+
+[node name="Leg2" type="RigidBody2D" parent="."]
+position = Vector2(-14, 82)
+
+[node name="Leg2" type="Sprite2D" parent="Leg2"]
+position = Vector2(1, -14)
+texture = ExtResource("1_ypg2y")
+offset = Vector2(6, 29)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Leg2"]
+polygon = PackedVector2Array(0, -1, 9, -1, 9, 30, 13, 36, 10, 47, -5, 47, -7, 39, -7, -1)
+
+[node name="Leg1" type="RigidBody2D" parent="."]
+position = Vector2(9, 82)
+
+[node name="Leg1" type="Sprite2D" parent="Leg1"]
+position = Vector2(1, -14)
+texture = ExtResource("1_ypg2y")
+offset = Vector2(6, 29)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Leg1"]
+polygon = PackedVector2Array(0, -1, 9, -1, 9, 30, 14, 38, 12, 47, -5, 47, -7, 39, -7, -1)
+
+[node name="Arm1" type="RigidBody2D" parent="."]
+position = Vector2(21, 31)
+scale = Vector2(-1, 1)
+
+[node name="Arm1" type="Sprite2D" parent="Arm1"]
+position = Vector2(0.990799, 0.373199)
+texture = ExtResource("2_yorm1")
+offset = Vector2(-8.99084, 22.6268)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arm1"]
+position = Vector2(-7, 21)
+shape = SubResource("RectangleShape2D_bwima")
+
+[node name="Torso" type="RigidBody2D" parent="."]
+position = Vector2(0, 50)
+mass = 2.11
+
+[node name="Torso" type="Sprite2D" parent="Torso"]
+position = Vector2(0, -10)
+texture = ExtResource("3_mpt12")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Torso"]
+position = Vector2(-0.5, 3)
+shape = SubResource("RectangleShape2D_h2uhf")
+
+[node name="TorsoHeadConnector" type="PinJoint2D" parent="."]
+position = Vector2(0, 24)
+node_a = NodePath("../Torso")
+node_b = NodePath("../Head")
+disable_collision = false
+
+[node name="Head" type="RigidBody2D" parent="."]
+
+[node name="Head" type="Sprite2D" parent="Head"]
+texture = ExtResource("4_fivkw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_uejrg")
+
+[node name="Arm2" type="RigidBody2D" parent="."]
+position = Vector2(-23, 33)
+
+[node name="Arm2" type="Sprite2D" parent="Arm2"]
+texture = ExtResource("2_yorm1")
+offset = Vector2(-7, 22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arm2"]
+position = Vector2(-8.5, 21)
+shape = SubResource("RectangleShape2D_bwima")
+
+[node name="TorsoArm1Connector" type="PinJoint2D" parent="."]
+position = Vector2(22, 31)
+node_a = NodePath("../Torso")
+node_b = NodePath("../Arm1")
+
+[node name="TorsoArm2Connector" type="PinJoint2D" parent="."]
+position = Vector2(-23, 31)
+node_a = NodePath("../Torso")
+node_b = NodePath("../Arm2")
+
+[node name="TorsoLeg2Connector" type="PinJoint2D" parent="."]
+position = Vector2(-14, 79)
+node_a = NodePath("../Torso")
+node_b = NodePath("../Leg2")
+
+[node name="TorsoLeg1Connector" type="PinJoint2D" parent="."]
+position = Vector2(9, 79)
+node_a = NodePath("../Torso")
+node_b = NodePath("../Leg1")

@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3 uid="uid://dtsaowptr0x52"]
+
+[ext_resource type="Script" uid="uid://qol04j1rxhu8" path="res://spawnWithKeyboard.gd" id="1_j43c1"]
+[ext_resource type="PackedScene" uid="uid://g5nflgm85d00" path="res://snake.tscn" id="1_pcief"]
+[ext_resource type="Script" uid="uid://ow3isabwtp7r" path="res://GoToMouse.gd" id="3_d2bsy"]
+[ext_resource type="Texture2D" uid="uid://b5xovwef8u4m" path="res://Ground.png" id="4_l5ks1"]
+[ext_resource type="Texture2D" uid="uid://duvcgr83l3afv" path="res://icon.svg" id="4_wyo6b"]
+[ext_resource type="PackedScene" uid="uid://cpur5vs3cv2gm" path="res://person.tscn" id="5_jilgx"]
+[ext_resource type="Script" uid="uid://ddt7c6m6oprcm" path="res://testingcamera.gd" id="6_x6wg4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rprss"]
+size = Vector2(1236, 228)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k7p8h"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_doa8k"]
+normal = Vector2(0.999949, 0.0100666)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3gs33"]
+size = Vector2(2, 1.75)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_j43c1")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(192, 515)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground"]
+position = Vector2(387.5, 97)
+scale = Vector2(1.239, 1)
+texture = ExtResource("4_l5ks1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(389, 135)
+shape = SubResource("RectangleShape2D_rprss")
+
+[node name="WorldBorder" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBorder"]
+shape = SubResource("WorldBoundaryShape2D_k7p8h")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBorder"]
+position = Vector2(0, 336)
+shape = SubResource("WorldBoundaryShape2D_doa8k")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBorder"]
+position = Vector2(1152, 308)
+rotation = 3.13114
+shape = SubResource("WorldBoundaryShape2D_doa8k")
+
+[node name="Person" parent="." instance=ExtResource("5_jilgx")]
+position = Vector2(644, 409)
+
+[node name="Walk2" parent="Person" index="1"]
+position = Vector2(419, 127)
+
+[node name="Snake" parent="." instance=ExtResource("1_pcief")]
+position = Vector2(325, 46)
+
+[node name="HeadDetector" parent="Snake/Head" index="0"]
+monitoring = false
+monitorable = false
+
+[node name="MouseBox" type="AnimatableBody2D" parent="."]
+script = ExtResource("3_d2bsy")
+
+[node name="Sprite2D2" type="Sprite2D" parent="MouseBox"]
+scale = Vector2(0.125, 0.109375)
+texture = ExtResource("4_wyo6b")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MouseBox"]
+scale = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_3gs33")
+
+[node name="TestCamera" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("6_x6wg4")
+
+[editable path="Person"]
+[editable path="Snake"]
